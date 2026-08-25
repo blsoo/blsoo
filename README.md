@@ -44,6 +44,16 @@ Production implementation stays private; the public repository contains sanitize
 
 ## Targeted technical cases
 
+### JobRadar — vacancy intelligence & Telegram workflow
+
+A useful end-to-end product that searches HeadHunter vacancies, normalizes and scores them with explainable rules, deduplicates delivery and sends actionable Telegram cards.
+
+**HH API → normalization → scoring → SQLite state → Telegram → save / skip / prepare application → feedback events**
+
+The MVP includes working Python code, tests and CI. External application submission is deliberately separated behind an OAuth/action boundary so the system never marks a vacancy as applied just because a request was attempted.
+
+[Open JobRadar →](https://github.com/blsoo/jobradar-vacancy-intelligence)
+
 ### SQL & PostgreSQL Casebook
 
 A growing relational-query portfolio where **completed means explainable**. Current evidence covers PK/FK, filtering, NULL, ordering, counts, INNER/LEFT JOIN and missing-related-row queries; advanced SQL stays in the roadmap until learned.
@@ -87,6 +97,7 @@ flowchart LR
 - system-level test cases and traceability;
 - operational risk, threat, failure and rollback modelling;
 - change-impact analysis and engineering decisions;
+- a working vacancy-monitoring product with external API + Telegram + persistent decision state;
 - CI checks that protect the public portfolio boundary;
 - explicit roadmaps that separate demonstrated work from the next learning/implementation stage.
 
