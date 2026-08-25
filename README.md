@@ -42,6 +42,24 @@ Production implementation stays private; the public repository contains sanitize
 
 [Open BullSignal architecture →](https://github.com/blsoo/bullsignal-system-architecture)
 
+## Targeted technical cases
+
+### SQL & PostgreSQL Casebook
+
+A growing relational-query portfolio where **completed means explainable**. Current evidence covers PK/FK, filtering, NULL, ordering, counts, INNER/LEFT JOIN and missing-related-row queries; advanced SQL stays in the roadmap until learned.
+
+[Open SQL Casebook →](https://github.com/blsoo/sql-postgresql-casebook)
+
+### FlowBridge — enterprise integration design
+
+Analysis-first integration case:
+
+**REST request → validation → idempotency → PostgreSQL → workflow → CRM/ERP adapter → retry/recovery → audit evidence**
+
+Includes requirements, process/data models, OpenAPI 3.1, error/idempotency semantics, integration sequences, tests and traceability. Executable adapters/persistence are explicitly roadmap work rather than being presented as finished production code.
+
+[Open FlowBridge →](https://github.com/blsoo/flowbridge-integration-platform)
+
 ## How I approach a system
 
 ```mermaid
@@ -69,7 +87,8 @@ flowchart LR
 - system-level test cases and traceability;
 - operational risk, threat, failure and rollback modelling;
 - change-impact analysis and engineering decisions;
-- CI checks that protect the public portfolio boundary.
+- CI checks that protect the public portfolio boundary;
+- explicit roadmaps that separate demonstrated work from the next learning/implementation stage.
 
 ## Current direction
 
