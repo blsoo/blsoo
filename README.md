@@ -12,26 +12,33 @@ I build and document systems around APIs, data, backend logic and workflow autom
 
 ### DevWork — system analysis & workflow automation
 
-A portfolio project that shows the full analyst chain:
+Full analyst chain from requirement to verification:
 
-**Requirements → Use Cases → Domain Model → ERD → SQL → REST/OpenAPI → Tests → Traceability**
+**Requirements → Use Cases → Business Rules → Domain Model → ERD → SQL → REST/OpenAPI → Tests → Traceability**
 
 [Open DevWork →](https://github.com/blsoo/devwork-system-analysis)
 
-### BullSignal
+### BullADM — operational automation
 
-A larger private engineering project around web/backend flows, Telegram, external APIs, monitoring, reliability and deployment safety. Public-safe architecture material is being extracted separately so production details and private history stay private.
+Mobile-first control-plane case focused on safe privileged workflows:
 
-### BullADM
+**Inspect → Preflight → Confirm → Backup → Apply → Verify → Rollback**
 
-Operational automation built around controlled actions, explicit confirmation, preflight checks, backup, verification and rollback. A public-safe case study is being prepared as a separate repository.
+Includes requirements, business rules, state machines, sequence diagrams, operation contract, failure scenarios and traceability.
+
+[Open BullADM →](https://github.com/blsoo/bulladm-ops-automation)
+
+### BullSignal — larger private engineering project
+
+Web/backend, Telegram and external-API project with reliability, monitoring and deployment-safety work. The production repository stays private; only sanitized architecture/case material is intended for the public portfolio.
 
 ## How I think about systems
 
 ```mermaid
 flowchart LR
     R[Requirements] --> UC[Use Cases]
-    UC --> D[Domain Model]
+    UC --> BR[Business Rules]
+    BR --> D[Domain Model]
     D --> API[API Contract]
     D --> DB[(Data Model)]
     API --> IMP[Implementation]
@@ -44,22 +51,19 @@ flowchart LR
 ## What you can review in my portfolio
 
 - functional and non-functional requirements;
-- acceptance criteria;
+- acceptance criteria and business rules;
 - use cases and alternative flows;
 - architecture and system-context diagrams;
 - ER models with PK/FK relationships;
-- sequence diagrams;
-- state machines;
+- sequence diagrams and state machines;
 - REST contracts and OpenAPI;
 - SQL schema and example queries;
 - system-level test cases;
 - requirements traceability;
-- engineering decisions and failure scenarios.
+- operational failure/recovery scenarios and engineering decisions.
 
 ## Current direction
 
 I study **Software Engineering at Vologda State University** and focus on system analysis, backend/integration development and enterprise automation.
-
-I use AI tools as part of an engineering workflow for analysis, prototyping, review and debugging, while keeping requirements, architecture and system behaviour explainable.
 
 Currently interested in **Junior System Analyst / System Analyst Intern / Integration & Automation** roles.
