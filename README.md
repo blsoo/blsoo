@@ -32,13 +32,15 @@ Requirements, state machines, sequence diagrams, operation contract, risk/threat
 
 [Open BullADM →](https://github.com/blsoo/bulladm-ops-automation)
 
-### BullSignal — integration & reliability case
+### BullSignal — system architecture & reliability
 
-A larger private engineering project around web/backend flows, Telegram, external APIs, background jobs, monitoring, deployment safety and isolated analytics research.
+Large integration case around web/backend flows, Telegram, external APIs, background jobs, monitoring, deployment safety and isolated analytics research.
 
-Production code and infrastructure remain private; the public material is sanitized:
+**Idempotency → Freshness contracts → Incident modelling → Baseline verification → Recovery → Research isolation**
 
-[Case study](BULLSIGNAL_CASE_STUDY.md) · [Architecture diagrams](BULLSIGNAL_DIAGRAMS.md) · [Reliability mini-postmortems](BULLSIGNAL_RELIABILITY_CASES.md)
+Production implementation stays private; the public repository contains sanitized architecture, requirements, integration contracts, reliability postmortems, traceability and CI safety checks.
+
+[Open BullSignal architecture →](https://github.com/blsoo/bullsignal-system-architecture)
 
 ## How I approach a system
 
