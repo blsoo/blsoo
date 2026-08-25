@@ -2,17 +2,19 @@
 
 **Junior System Analyst · Automation & Integration**
 
-I build and document systems around APIs, data, backend logic and workflow automation.
+I design and document systems around APIs, data, backend logic, integrations and workflow automation.
 
 ## Core skills
 
 `SQL` `REST API` `HTTP` `JSON` `PostgreSQL` `System Analysis` `Requirements` `Integrations` `Python` `PHP` `Git/GitHub` `Linux` `CI/CD` `Telegram Bot API` `1C`
 
+> **Short on time?** Open the [5-minute portfolio map](PORTFOLIO_MAP.md).
+
 ## Flagship projects
 
 ### DevWork — system analysis & workflow automation
 
-Full analyst chain from requirement to verification:
+Full analyst trail from requirement to verification:
 
 **Requirements → Use Cases → Business Rules → Domain Model → ERD → SQL → REST/OpenAPI → Tests → Traceability**
 
@@ -24,15 +26,19 @@ Mobile-first control-plane case focused on safe privileged workflows:
 
 **Inspect → Preflight → Confirm → Backup → Apply → Verify → Rollback**
 
-Includes requirements, business rules, state machines, sequence diagrams, operation contract, failure scenarios and traceability.
+Requirements, state machines, sequence diagrams, operation contract, risk/failure scenarios and traceability.
 
 [Open BullADM →](https://github.com/blsoo/bulladm-ops-automation)
 
-### BullSignal — larger private engineering project
+### BullSignal — integration & reliability case
 
-Web/backend, Telegram and external-API project with reliability, monitoring and deployment-safety work. The production repository stays private; only sanitized architecture/case material is intended for the public portfolio.
+A larger private engineering project around web/backend flows, Telegram, external APIs, background jobs, monitoring, deployment safety and isolated analytics research.
 
-## How I think about systems
+Production code and infrastructure remain private; the public material is sanitized:
+
+[Case study](BULLSIGNAL_CASE_STUDY.md) · [Architecture diagrams](BULLSIGNAL_DIAGRAMS.md)
+
+## How I approach a system
 
 ```mermaid
 flowchart LR
@@ -48,19 +54,17 @@ flowchart LR
     TR -. feedback .-> R
 ```
 
-## What you can review in my portfolio
+## What you can review here
 
-- functional and non-functional requirements;
-- acceptance criteria and business rules;
-- use cases and alternative flows;
-- architecture and system-context diagrams;
-- ER models with PK/FK relationships;
-- sequence diagrams and state machines;
+- functional/non-functional requirements and acceptance criteria;
+- use cases, alternative flows and business rules;
+- architecture, ERD, sequence and state diagrams;
 - REST contracts and OpenAPI;
-- SQL schema and example queries;
-- system-level test cases;
-- requirements traceability;
-- operational failure/recovery scenarios and engineering decisions.
+- SQL schema and practical queries;
+- integration, retry, idempotency and stale-state scenarios;
+- system-level test cases and traceability;
+- operational risk, failure and rollback modelling;
+- change-impact analysis and engineering decisions.
 
 ## Current direction
 
