@@ -1,5 +1,7 @@
 # Hi, I'm Leonid
 
+[![Profile portfolio checks](https://github.com/blsoo/blsoo/actions/workflows/profile-checks.yml/badge.svg)](https://github.com/blsoo/blsoo/actions/workflows/profile-checks.yml)
+
 **Junior System Analyst · Automation & Integration**
 
 I design and document systems around APIs, data, backend logic, integrations and workflow automation.
@@ -26,7 +28,7 @@ Mobile-first control-plane case focused on safe privileged workflows:
 
 **Inspect → Preflight → Confirm → Backup → Apply → Verify → Rollback**
 
-Requirements, state machines, sequence diagrams, operation contract, risk/failure scenarios and traceability.
+Requirements, state machines, sequence diagrams, operation contract, risk/threat analysis, failure scenarios and traceability.
 
 [Open BullADM →](https://github.com/blsoo/bulladm-ops-automation)
 
@@ -36,7 +38,7 @@ A larger private engineering project around web/backend flows, Telegram, externa
 
 Production code and infrastructure remain private; the public material is sanitized:
 
-[Case study](BULLSIGNAL_CASE_STUDY.md) · [Architecture diagrams](BULLSIGNAL_DIAGRAMS.md)
+[Case study](BULLSIGNAL_CASE_STUDY.md) · [Architecture diagrams](BULLSIGNAL_DIAGRAMS.md) · [Reliability mini-postmortems](BULLSIGNAL_RELIABILITY_CASES.md)
 
 ## How I approach a system
 
@@ -63,8 +65,9 @@ flowchart LR
 - SQL schema and practical queries;
 - integration, retry, idempotency and stale-state scenarios;
 - system-level test cases and traceability;
-- operational risk, failure and rollback modelling;
-- change-impact analysis and engineering decisions.
+- operational risk, threat, failure and rollback modelling;
+- change-impact analysis and engineering decisions;
+- CI checks that protect the public portfolio boundary.
 
 ## Current direction
 
