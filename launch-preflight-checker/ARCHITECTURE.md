@@ -1,24 +1,26 @@
 # Architecture
 
-```mermaid
-flowchart LR
-    U[URL] --> V[Target validation / SSRF guard]
-    V --> F[HTTP fetch + safe redirects]
-    F --> P[BeautifulSoup parser]
-    P --> C1[CTA / form / FAQ]
-    P --> C2[UTM / dates / key blocks]
-    P --> C3[Link discovery]
-    C3 --> L[Bounded link checks]
-    C1 --> R[Readiness report]
-    C2 --> R
-    L --> R
-    R --> UI[Web UI / JSON API]
-```
+## Поток проверки
 
-## Design decisions
+`Browser -> FastAPI -> URL validation -> HTTP fetch -> HTML parser -> checks -> JSON/UI report`
 
-- **Server-side checker**: required for link status checks and consistent parsing.
-- **Bounded crawler**: only one landing page plus at most 30 discovered links; this is preflight QA, not a crawler.
-- **Manual Telegram layer**: business logic that depends on an authenticated Telegram/NotiBot session is reported as manual QA instead of pretending it can be verified from HTML.
-- **Evidence-first output**: every check returns a status, short explanation and evidence so a technical specialist can quickly decide whether the launch is blocked.
-- **Fail-safe URL handling**: redirects are revalidated and private/reserved network ranges are rejected.
+Основные компоненты:
+
+- `app/main.py` — HTTP API, healthcheck и web UI;
+- `app/checker.py` — URL validation, fetch, parsing, scoring и checks;
+- `app/templates/index.html` — минимальный mobile-friendly интерфейс;
+- `tests/` — unit tests для критичных helper'ов;
+- `.github/workflows/` — CI;
+- `Dockerfile` / `docker-compose.yml` / `render.yaml` — воспроизводимый запуск и деплой.
+
+## Принцип проектирования
+
+Инструмент не пытается симулировать Telegram и не выдаёт догадки за успешный QA. То, что можно доказать по HTTP/DOM, проверяется автоматически. То, что зависит от Telegram WebView, реальной пользовательской сессии или бизнес-логики NotiBot, явно маркируется как manual check.
+
+## Scoring
+
+Core checks формируют score `/100`. Критический fail даёт `BLOCKED`; предупреждения снижают score; ручные проверки остаются видимыми отдельно.
+
+## Почему без headless browser
+
+Первая версия намеренно использует статический HTTP/DOM анализ: это быстрее, дешевле и безопаснее для preflight большинства лендингов. Для SPA / динамического Mini App checker добавляет предупреждение о динамическом DOM. Следующий production-шаг — изолированный Playwright worker с жёсткой egress policy.
