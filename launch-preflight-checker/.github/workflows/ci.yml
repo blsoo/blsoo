@@ -13,5 +13,21 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install --upgrade pip
-      - run: pip install -r launch-preflight-checker/requirements.txt
-      - run: cd launch-preflight-checker && python -m unittest discover -s tests -v
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - name: Compile check
+        run: python -m compileall -q app tests
+      - name: HTTP smoke test
+        run: |
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 8080 >/tmp/launch-preflight-checker.log 2>&1 &
+          pid=$!
+          trap 'kill $pid' EXIT
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8080/health | grep -q '"ok":true'; then
+              curl -fsS http://127.0.0.1:8080/ | grep -q 'Launch Preflight Checker'
+              exit 0
+            fi
+            sleep 0.5
+          done
+          cat /tmp/launch-preflight-checker.log
+          exit 1
