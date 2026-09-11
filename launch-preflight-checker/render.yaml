@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: launch-preflight-checker
+    runtime: docker
+    healthCheckPath: /health
+    autoDeploy: false
