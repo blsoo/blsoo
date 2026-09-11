@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Launch Preflight Checker</title>
+  <style>
+    :root{color-scheme:dark;--bg:#08110f;--card:#0d1917;--card2:#101f1c;--line:#203833;--text:#f1fbf7;--muted:#8fa9a2;--accent:#5ce7bd;--accent2:#9af3d7;--warn:#ffd166;--fail:#ff7373;--manual:#9db8ff}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% -10%,#173b32 0,transparent 38%),linear-gradient(180deg,#091210,#07100e);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);min-height:100vh}
+    main{max-width:1000px;margin:0 auto;padding:64px 22px 90px}.hero{position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--accent);font-weight:850;letter-spacing:.12em;text-transform:uppercase;font-size:12px}.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px var(--accent)}
+    h1{font-size:clamp(42px,7vw,76px);line-height:.94;margin:14px 0 20px;letter-spacing:-.055em;max-width:820px}.lead{font-size:17px;max-width:730px;color:var(--muted)}
+    form{display:grid;grid-template-columns:1fr auto;gap:10px;margin:30px 0 12px;background:rgba(13,25,23,.72);padding:8px;border:1px solid var(--line);border-radius:18px;backdrop-filter:blur(14px)}input{min-width:0;background:transparent;border:0;outline:none;padding:12px 13px;color:var(--text);font-size:16px}button{border:0;border-radius:12px;padding:0 23px;font-weight:900;background:var(--accent);color:#062018;cursor:pointer;transition:.16s transform,.16s filter}button:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .hint{font-size:12px;color:#65817a;margin:0 8px}.statusline{display:flex;align-items:center;gap:10px;min-height:34px;margin:22px 0}.loading{display:none;color:var(--muted)}.spinner{display:inline-block;width:14px;height:14px;border:2px solid #35544c;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.error{color:var(--fail);font-weight:700}
+    .result-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin:34px 0 18px}.verdict{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.scoreline{display:flex;align-items:baseline;gap:10px}.score{font-size:48px;line-height:1;font-weight:950;letter-spacing:-.05em}.score small{font-size:18px;color:var(--muted);font-weight:700}.verdict-value{font-size:18px;font-weight:900;color:var(--accent)}
+    .actions{display:flex;gap:8px}.secondary{background:#10231f;color:var(--accent2);border:1px solid var(--line);padding:10px 14px;border-radius:12px}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.pill{border:1px solid var(--line);background:rgba(16,31,28,.78);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.check{background:linear-gradient(180deg,rgba(16,31,28,.96),rgba(11,23,20,.96));border:1px solid var(--line);border-radius:18px;padding:18px;min-height:130px}.head{display:flex;gap:10px;align-items:center}.icon{font-size:19px}.title{font-weight:900;font-size:16px}.detail{margin:9px 0 0;color:var(--muted)}ul{margin:11px 0 0;padding-left:21px;color:#c8d9d4;word-break:break-word}.manual{border-color:#294057}.fail{border-color:#5a2b2b}.warn{border-color:#574a26}.pass{border-color:#24463d}
+    footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:#66827b;font-size:13px}.smallcaps{text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:#618078}
+    @media(max-width:720px){main{padding-top:38px}.grid{grid-template-columns:1fr}.result-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions button{flex:1}form{grid-template-columns:1fr}form button{padding:14px}h1{font-size:46px}}
+  </style>
+</head>
+<body><main>
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span>Launch QA / preflight</div>
+    <h1>Проверь лендинг до запуска.</h1>
+    <p class="lead">Один URL → доступность, CTA, форма, UTM/dоjim, FAQ, даты, ключевые секции и битые ссылки. Telegram/NotiBot-механику checker честно выносит в ручной QA.</p>
+    <form id="f"><input id="url" type="url" required autocomplete="url" placeholder="https://…"><button>Проверить запуск</button></form>
+    <div class="hint">SSRF-safe: localhost и private IP блокируются, редиректы валидируются, HTML ограничен 2 MB.</div>
+  </section>
+
+  <div class="statusline"><div id="loading" class="loading"><span class="spinner"></span>&nbsp; Проверяю страницу и до 20 ссылок…</div><div id="error" class="error"></div></div>
+
+  <section id="result" hidden>
+    <div class="result-head">
+      <div><div class="verdict">Launch readiness</div><div class="scoreline"><div id="score" class="score"></div><div id="verdict" class="verdict-value"></div></div></div>
+      <div class="actions"><button type="button" id="copy" class="secondary">Скопировать отчёт</button><button type="button" id="json" class="secondary">JSON</button></div>
+    </div>
+    <div id="meta" class="meta"></div>
+    <div id="checks" class="grid"></div>
+  </section>
+
+  <footer><span class="smallcaps">Scope</span><br>Автоматическая проверка не заменяет функциональный тест Telegram Mini App: popup, submit формы и дожимы 5/10 минут нужно подтвердить вручную.</footer>
+</main>
+<script>
+const icons={pass:'✅',warn:'⚠️',fail:'❌',manual:'🖐️'};
+const f=document.querySelector('#f'), result=document.querySelector('#result'), checks=document.querySelector('#checks'), meta=document.querySelector('#meta'), err=document.querySelector('#error'), loading=document.querySelector('#loading'), score=document.querySelector('#score'), verdict=document.querySelector('#verdict');
+let lastData=null;
+f.addEventListener('submit',async e=>{e.preventDefault();err.textContent='';result.hidden=true;loading.style.display='block';
+ try{const r=await fetch('/api/check?url='+encodeURIComponent(document.querySelector('#url').value)); const data=await r.json(); if(!r.ok)throw new Error(data.detail||'Ошибка проверки'); lastData=data;
+ score.innerHTML=`${data.score}<small>/100</small>`; verdict.textContent=data.verdict.replace('_',' ');
+ meta.innerHTML=`<span class="pill">✅ ${data.summary.pass}</span><span class="pill">⚠️ ${data.summary.warn}</span><span class="pill">❌ ${data.summary.fail}</span><span class="pill">🖐️ ${data.summary.manual}</span><span class="pill">Links ${data.checked_links}/${data.discovered_links}</span>`;
+ checks.innerHTML=data.checks.map(c=>`<article class="check ${c.status}"><div class="head"><div class="icon">${icons[c.status]}</div><div class="title">${esc(c.title)}</div></div><div class="detail">${esc(c.detail)}</div>${c.evidence?.length?'<ul>'+c.evidence.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':''}</article>`).join(''); result.hidden=false;
+ }catch(x){err.textContent=x.message}finally{loading.style.display='none'}});
+document.querySelector('#copy').addEventListener('click',async()=>{if(!lastData)return;const text=[`Launch Preflight: ${lastData.verdict} — ${lastData.score}/100`,`URL: ${lastData.input_url}`,...lastData.checks.map(c=>`${icons[c.status]} ${c.title}: ${c.detail}`)].join('\n');await navigator.clipboard.writeText(text);document.querySelector('#copy').textContent='Скопировано';setTimeout(()=>document.querySelector('#copy').textContent='Скопировать отчёт',1200)});
+document.querySelector('#json').addEventListener('click',()=>{if(!lastData)return;const blob=new Blob([JSON.stringify(lastData,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='launch-preflight-report.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)});
+function esc(x){return String(x).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+</script></body></html>
