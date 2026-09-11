@@ -34,3 +34,7 @@ Telegram bot / Mini App:
 ## Дополнительный бонус
 
 **Launch Preflight Checker** — отдельный инструмент для preflight-проверки посадочных перед запуском. Он не заменяет NotiBot, а автоматически проверяет URL, CTA, форму, FAQ, UTM/dojim, даты, ключевые блоки и ссылки; Telegram/NotiBot-интерактив выводит в ручной QA checklist. Для максимально точной DOM-проверки используется ссылка «лендинг», которую NotiBot выдаёт по `/weburl`.
+
+Техническая часть включает FastAPI, SSRF-защиту, Docker, Render Blueprint, unit tests и HTTP smoke-test в GitHub Actions.
+
+Финальная матрица перепроверки: [`FINAL_QA.md`](FINAL_QA.md).
