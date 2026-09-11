@@ -64,7 +64,7 @@ GET /health
 python -m unittest discover -s tests -v
 ```
 
-GitHub Actions запускает эти тесты на каждый push/PR.
+GitHub Actions запускает unit-тесты и HTTP smoke-test на каждый push/PR.
 
 ## Scope ручной проверки
 
@@ -77,3 +77,7 @@ GitHub Actions запускает эти тесты на каждый push/PR.
 - автосообщения 5/10 минут;
 - условие «форма не заполнена»;
 - отсутствие дожимов после регистрации.
+
+## Финальная перепроверка тестового
+
+Подтверждённые пункты, manual-only ограничения Telegram WebView и найденный конфликт дат собраны в [`FINAL_QA.md`](FINAL_QA.md).
